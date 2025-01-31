@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PetsModule } from './pets/pets.module';
@@ -9,6 +9,7 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
+import { CorsMiddleware } from './middleware/cors.middleware';
 
 @Module({
   imports: [
@@ -33,4 +34,8 @@ import { User } from './users/entities/user.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorsMiddleware).forRoutes('*'); // ใช้ Middleware สำหรับทุก Route
+  }
+}
