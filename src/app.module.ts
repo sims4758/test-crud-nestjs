@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { CorsMiddleware } from './middleware/cors.middleware';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { CorsMiddleware } from './middleware/cors.middleware';
     }),
     PetsModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    EmailModule
   ],
   controllers: [AppController],
   providers: [AppService],
