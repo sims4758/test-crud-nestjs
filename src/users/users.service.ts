@@ -37,13 +37,15 @@ export class UsersService {
         }
 
         try {
-              const decryptedFullname = await decrypt(user.fullname);
-              user.fullname = decryptedFullname; // Update user object
+              // const decryptedFullname = await decrypt(user.fullname);
+              // user.fullname = decryptedFullname;
+              user.password = undefined;
+              user.refreshToken = undefined;
+              return user;
             } catch (error) {
               console.error('Error decrypting fullname:', error);
               // Handle decryption error (e.g., log, return appropriate response)
             }
-    return user;
   }
 
   async findAll(): Promise<User[]> {
