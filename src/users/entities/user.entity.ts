@@ -13,6 +13,9 @@ export class User {
 
   @Column()
   fullname: string;
+
+  @Column()
+  refreshToken: string;
 }
 
 

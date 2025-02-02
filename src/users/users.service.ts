@@ -50,4 +50,16 @@ export class UsersService {
     return this.userRepository.find();
   }
 
+  async findById(userId: number) {
+    return this.userRepository.findOneBy({ userId: userId });
+  }
+
+  async updateRefreshToken(userId: number, refreshToken: string) {
+    const user = await this.userRepository.findOneBy({ userId: userId });
+    if (user) {
+      user.refreshToken = refreshToken;
+      await this.userRepository.save(user);
+    }
+  }
+
 }
