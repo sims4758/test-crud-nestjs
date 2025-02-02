@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -11,18 +11,19 @@ export class AuthService {
 
    async validateUser(username: string, pass: string): Promise<any> {
     //decrypt password
-
     const user = await this.usersService.findOne(username);
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
-      return result;
+    const isMatch = await bcrypt.compare(pass, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException('Invalid credentials');
     }
-    return null;
+
+    const { password, ...result } = user;
+    return result;
   }
 
   async generateTokens(user: any) {
     const payload = { username: user.username, sub: user.userId };
-    const accessToken = this.jwtService.sign(payload, { secret: jwtConstants.secret, expiresIn: '5m' });
+    const accessToken = this.jwtService.sign(payload, { secret: jwtConstants.secret, expiresIn: '15m' });
     const refreshToken = this.jwtService.sign(payload, { secret: jwtConstants.refreshSecret, expiresIn: '7d' });
 
     // บันทึก Refresh Token ลงฐานข้อมูล (ในที่นี้เป็น mock)
@@ -32,6 +33,10 @@ export class AuthService {
   }
 
   async login(user: any) {
+    const resule = await this.validateUser(user.username, user.password);
+    if (!resule) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
     return this.generateTokens(user);
   }
 

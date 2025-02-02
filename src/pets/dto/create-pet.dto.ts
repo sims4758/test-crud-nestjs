@@ -9,6 +9,9 @@ export class CreatePetDto {
     @IsString()
     petSex: string;
 
+    @IsString()
+    petDescription: string;
+
     @IsOptional() // เปลี่ยนเป็น UploadedFile
     petPicture: string; // ระบุ type เป็น Express.Multer.File
 }

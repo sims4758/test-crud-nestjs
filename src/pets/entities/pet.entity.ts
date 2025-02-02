@@ -15,5 +15,8 @@ export class Pet {
   petSex: string;
 
   @Column()
+  petDescription: string;
+
+  @Column()
   petPicture: string;
 }

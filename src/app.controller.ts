@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -6,6 +6,7 @@ import { diskStorage } from 'multer';
 import { join } from 'path';
 import { fileNameEditor, imageFileFilter } from './services/upload-service/file.until';
 import { CreateFileDto } from './services/upload-service/dto/create-file-dto';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller()
 export class AppController {
@@ -27,6 +28,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('/upload')
   @UseInterceptors(
     FileInterceptor('file', {

@@ -36,6 +36,7 @@ import { EmailModule } from './email/email.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(CorsMiddleware).forRoutes('*'); // ใช้ Middleware สำหรับทุก Route

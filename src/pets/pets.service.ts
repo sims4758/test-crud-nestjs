@@ -16,9 +16,6 @@ export class PetsService {
     try {
       const pet = await this.petRepository.create(createPetDto);
       const result = await this.petRepository.insert(pet);
-      // return "Pet created successfully with id: " + result.identifiers[0].id;
-
-      //return to json
       return {
         status: 200,
         id: result.identifiers[0].id,

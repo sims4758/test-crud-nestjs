@@ -39,8 +39,6 @@ export class UsersService {
         try {
               // const decryptedFullname = await decrypt(user.fullname);
               // user.fullname = decryptedFullname;
-              user.password = undefined;
-              user.refreshToken = undefined;
               return user;
             } catch (error) {
               console.error('Error decrypting fullname:', error);
