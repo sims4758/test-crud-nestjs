@@ -25,12 +25,19 @@ export class PetsService {
     }
   }
 
-  async findAll() {
-      const result = await this.petRepository.findAndCount();
-      console.log(result);
-      
-      return result;
-  }
+  async findAll(limit: number = 10, offset: number = 0) {
+    const [result, total] = await this.petRepository.findAndCount({
+        take: limit,  // จำนวน record ที่ต้องการดึง
+        skip: offset  // ข้าม record ตามจำนวนที่กำหนด
+    });
+
+    return {
+        data: result,
+        total: total,
+        limit: limit,
+        offset: offset
+    };
+}
 
   async findOne(id: number) {
     

@@ -37,8 +37,8 @@ export class UsersService {
         }
 
         try {
-              // const decryptedFullname = await decrypt(user.fullname);
-              // user.fullname = decryptedFullname;
+              const decryptedFullname = await decrypt(user.fullname);
+              user.fullname = decryptedFullname;
               return user;
             } catch (error) {
               console.error('Error decrypting fullname:', error);
