@@ -62,6 +62,10 @@ http://localhost:3000/pets/all
 
 Use Postman
 ```bash
+## Offset
+curl --location 'http://localhost:3000/pets/all/10/0' \
+--header 'Authorization: Bearer =>access_token<=' \
+
 ## Find one
 curl --location 'http://localhost:3000/pets/1' \
 --header 'Authorization: Bearer =>access_token<='
